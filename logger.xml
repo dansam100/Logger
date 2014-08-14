@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<logger xmlns="http://www.w3.org/1999/XSL/Transform2000">
+  <logger.configuration threshold="Debug" watchConfig="true">
+    <root>
+      <details level="Debug"/>
+      <notifier name="FileNotifier"/>
+      <notifier name="ConsoleNotifier"/>
+    </root>
+
+    <logger>
+      <details name="ProgHasher.Hasher" level="Fatal"/>
+      <notifier name="ConsoleNotifier"/>
+      <notifier name="FileNotifier"/>
+    </logger>
+
+    <logger>
+      <details name="ProgHasher.Program" level="Debug"/>
+      <notifier name="ConsoleNotifier"/>
+      <notifier name="FileNotifier"/>
+    </logger>
+
+    <notifier name="FileNotifier" type="Logger.Notifier.FileNotifier">
+      <parameters>
+        <param name="filename" value="$assembly$_log_$date$.$extension$"/>
+        <param name="append" value="true"/>
+        <param name="MaxFileSize" value="2000"/>
+      </parameters>
+      <layout name="xml-layout" type="Logger.Layout.XmlLayout"/>
+    </notifier>
+
+    <notifier name="ConsoleNotifier" type="Logger.Notifier.ConsoleNotifier">
+      <layout name="text-layout"/>
+    </notifier>
+
+    <layout.config name="xml-layout" type="Logger.Layout.XmlLayout">
+      <parameters>
+        <param name="header" value="[Header]"/>
+        <param name="footer" value="[Footer]"/>
+        <param name="rootnode" value="Logger">
+          <attribute name="machine" value="$machine$"/>
+          <attribute name="user" value="$user$"/>
+        </param>
+        <param name="lognode" value="Log">
+          <attribute name="date" value="$date$"/>
+          <attribute name="time" value="$time$"/>
+          <attribute name="level" value="$level$"/>
+          <message value="$content$\n$exception$"/>
+        </param>
+      </parameters>
+    </layout.config>
+
+    <layout.config name="text-layout" type="Logger.Layout.TextLayout">
+      <parameters>
+        <param name="header" value="[Header]"/>
+        <param name="footer" value="[Footer]"/>
+        <param name="pattern" value="[$level$]: {$thread$} ($date$@$time$)\t$content$"/>
+      </parameters>
+    </layout.config>
+  </logger.configuration>
+</logger>
